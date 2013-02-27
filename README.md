@@ -4,7 +4,7 @@ Office Scripts
 **Helping you automate your desktop experience. An opensource experiment powered by Python.**
 
 Office Scripts is a place to conglomerate all those scripts you have automating your work and/or desktop life. To start this off, we have several scripts
-that my colleague and I have worked on that we use, and we're waiting for you on the [community page](http://www.reddit.com/OfficeScripts) to request or 
+that my colleague and I have worked on that we use, and we're waiting for you on the [community page](http://www.reddit.com/r/OfficeScripts) to request or 
 contribute your own!
 
 This repository is a dump for all the scripts connected to the Office Scripts project, however, each script is stored in its own repository with its corresponding
