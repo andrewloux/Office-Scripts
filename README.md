@@ -27,7 +27,7 @@ To keep it simple, and because **Python** is a new-programmer favourite, Office 
 
 
 ***Need Help?***
-The [Office Scripts subreddit](http://www.reddit.com/OfficeScripts) will be our hub, so find us over there, and we can discuss implementation.
+The [Office Scripts subreddit](http://www.reddit.com/r/OfficeScripts) will be our hub, so find us over there, and we can discuss implementation.
 
 We strongly encourage you to attempt to code a solution to your problem, and then contribute it to the home repository before seeking out the community for
 help on your script. 
