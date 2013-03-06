@@ -1,4 +1,7 @@
+#!/usr/bin/env python
 #Quickly clean my music, videos and images into a different directory.
+#QuickClean.py
+#Version 0.02
 import glob
 import sys
 import os
@@ -7,40 +10,43 @@ import argparse
 
 
 parser = argparse.ArgumentParser(description='A quick way to clean out your cluttered folders.')
-parser.add_argument('-s','--source directory', help='Folder you want to clean out.', required=True)
-parser.add_argument('-m','--music directory', help='Description for bar argument', required=True)
-parser.add_argument('-p','--pictures directory', help='Description for bar argument', required=True)
-parser.add_argument('-v','--videos directory', help='Description for bar argument', required=True)
-parser.add_argument('-d','--documents directory', help='Description for bar argument', required=True)
+parser.add_argument('-s','--source', help='Directory you want to clean out. If no other argumnets are provided, will create relevant directories under source directory', required=True)
+parser.add_argument('-m','--music', help='Directory you want to copy music files to. If absolute path is not provided, will create directory inside the source directory', default='music', required=False)
+parser.add_argument('-p','--pictures', help='Directory you want to copy picture files to. If absolute path is not provided, will create directory inside the source directory', default='pictures', required=False)
+parser.add_argument('-v','--videos', help='Directory you want to copy video files to. If absolute path is not provided, will create directory inside the source directory', default='videos', required=False)
+parser.add_argument('-d','--documents', help='Directory you want to copy document files to. If absolute path is not provided, will create directory inside the source directory', default='documents',required=False)
 
 
-args = vars(parser.parse_args())
+args = parser.parse_args()
+os.chdir(args.source)
 
-os.chdir(args['source directory']) #source_dir
-destination_dirs = [args['music directory'],args['videos directory'],args['pictures directory'],args['documents directory']]
 
 #Parameters to clean.
 music = glob.glob("*.mp3") + glob.glob("*.flac") + glob.glob("*.aac")
-pictures = glob.glob("*.png") + glob.glob ("*.jpg") + glob.glob("*.bmp")
-videos = glob.glob("*.avi") + glob.glob("*.mp4") + glob.glob("*.flv")
-documents = glob.glob ("*.pdf") + glob.glob ("*.ppt") + glob.glob("*.zip") + glob.glob("*.m")
+pictures = glob.glob("*.png") + glob.glob ('*.jpg') + glob.glob("*.bmp")+ glob.glob("*.gif")
+videos = glob.glob("*.avi") + glob.glob("*.mp4") + glob.glob("*.flv") + glob.glob("*.mkv") + glob.glob("*.mov")
+documents = glob.glob ('*.pdf') + glob.glob ('*.PDF') + glob.glob ("*.xls") + glob.glob ("*.xlsx") + glob.glob ("*.pptx") + glob.glob ("*.docx") + glob.glob("*.m") + glob.glob("*.ppt") + glob.glob("*.doc")
 
-#Creates music, videos, and pictures directories if they do not exist. 
-for directory in destination_dirs:
-    if not os.path.exists(directory):
-        os.makedirs(directory)
-
+   
 #Copies to destination directory, and then deletes the file. This is done because shutil's copy method has the ability to overwrite. 
 for songs in music:
-    shutil.copy(songs,destination_dirs[0])
-    os.remove(songs)
+	if not os.path.exists(args.music):
+		os.mkdir(args.music)
+	shutil.copy(songs,args.music)
+	os.remove(songs)
 for video in videos:
-    shutil.copy(video,destination_dirs[1])
-    os.remove(video)
+	if not os.path.exists(args.videos):
+		os.mkdir(args.videos)
+	shutil.copy(video,args.videos)
+	os.remove(video)
 for picture in pictures:
-    shutil.copy(picture,destination_dirs[2])
-    os.remove(picture)
+	if not os.path.exists(args.pictures):
+		os.mkdir(args.pictures)
+	shutil.copy(picture,args.pictures)
+	os.remove(picture)
 for document in documents:
-    shutil.copy(document,destination_dirs[3])
-    os.remove(document)
+	if not os.path.exists(args.documents):
+		os.mkdir(args.documents)
+	shutil.copy(document,args.documents)
+	os.remove(document)
 
