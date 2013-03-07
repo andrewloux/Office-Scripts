@@ -14,8 +14,6 @@ from bs4 import BeautifulSoup
 #            print ('nope')
 #        else:
 #            print (link.get('href'))
-    
-
 
 
 def find_links(sub_r):
@@ -37,4 +35,6 @@ def main():
     links=find_links(sub)
     get_images(links)
 
-main()
+
+if __name__ == '__main__':
+    main()
