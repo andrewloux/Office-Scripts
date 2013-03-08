@@ -69,10 +69,10 @@ for label, types in file_types.iteritems():
     for ext in types:
         for fname in all_files:
             if fname.endswith("." + ext):
-                try:
                     for key, value in args.iteritems():
-                        os.mkdir(value)   
-                except OSError:
-                    pass
-                        shutil.copy(fname, value)
+                        try: 
+                            os.mkdir(value)   
+                        except OSError:
+                            pass
+                        shutil.copy2(fname,value)
                         os.remove(fname)
