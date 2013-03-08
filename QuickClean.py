@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # QuickClean.py
-# Version 0.03
+# Version 0.04
 
 """
 Quickly clean music, videos, images and documents into a different directory.
@@ -50,65 +50,27 @@ parser.add_argument('-d',
                     default='documents',
                     required=False)
 
+
 args = parser.parse_args()
 os.chdir(args.source)
 
-
-# Parameters to clean.
-
-music = glob.glob("*.mp3") + \
-        glob.glob("*.aac") + \
-        glob.glob("*.flac")
-
-pictures = glob.glob("*.png") + \
-           glob.glob("*.bmp") + \
-           glob.glob("*.gif") + \
-           glob.glob("*.jpg") + \
-           glob.glob("*.JPG") + \
-           glob.glob("*.jpeg") + \
-           glob.glob("*.JPEG")
-
-videos = glob.glob("*.avi") + \
-         glob.glob("*.mp4") + \
-         glob.glob("*.flv") + \
-         glob.glob("*.mkv") + \
-         glob.glob("*.mov")
-
-documents = glob.glob("*.pdf") + \
-            glob.glob("*.PDF") + \
-            glob.glob("*.zip") + \
-            glob.glob("*.doc") + \
-            glob.glob("*.xls") + \
-            glob.glob("*.ppt") + \
-            glob.glob("*.docx") + \
-            glob.glob("*.xlsx") + \
-            glob.glob("*.pptx") + \
-            glob.glob("*.m")
+file_types = {
+    "music": ["mp3", "flac", "aac"],
+    "pictures": ["png", "jpg", "bmp", "gif"],
+    "videos": ["avi", "mp4", "flv", "mkv", "mov"],
+    "documents": ["pdf", "xls", "xlsx", "pptx", "docx", "m", "ppt", "doc"],
+}
 
 
-# Copies to destination directory, and then deletes the file. This is 
-# done because shutil's copy method has the ability to overwrite.
+all_files = glob.glob("*")
 
-for songs in music:
-    if not os.path.exists(args.music):
-        os.mkdir(args.music)
-    shutil.copy(songs, args.music)
-    os.remove(songs)
-
-for video in videos:
-    if not os.path.exists(args.videos):
-        os.mkdir(args.videos)
-    shutil.copy(video, args.videos)
-    os.remove(video)
-
-for picture in pictures:
-    if not os.path.exists(args.pictures):
-        os.mkdir(args.pictures)
-    shutil.copy(picture, args.pictures)
-    os.remove(picture)
-
-for document in documents:
-    if not os.path.exists(args.documents):
-        os.mkdir(args.documents)
-    shutil.copy(document, args.documents)
-    os.remove(document)
+for label, types in file_types.iteritems():
+    for ext in types:
+        for fname in all_files:
+            if fname.endswith("." + ext):
+                try: 
+                    os.mkdir(vars(args)[label])   
+                except OSError:
+                    pass
+                shutil.copy2(fname, vars(args)[label])
+                os.remove(fname)
